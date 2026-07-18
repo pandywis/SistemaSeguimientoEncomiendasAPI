@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SistemaSeguimientoEncomiendasAPI.Models;
+using SistemaSeguimientoEncomiendas.Domain.Entities;
 
-namespace SistemaSeguimientoEncomiendasAPI.Data
-{
+namespace Encomiendas.Infrastructure.Context;
+
+
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
@@ -16,4 +17,3 @@ namespace SistemaSeguimientoEncomiendasAPI.Data
 
 
     }
-}

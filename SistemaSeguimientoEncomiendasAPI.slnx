@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="Encomiendas.Infrastructure/Encomiendas.Infrastructure.csproj" Id="77b5710e-d41a-4239-a632-b84bb1dbcaf6" />
+  <Project Path="SistemaSeguimientoEncomiendas.Domain/SistemaSeguimientoEncomiendas.Domain.csproj" Id="5e3a7fa1-e455-4a13-bcc8-73a6c7ed788a" />
   <Project Path="SistemaSeguimientoEncomiendasAPI/SistemaSeguimientoEncomiendasAPI.csproj" />
 </Solution>

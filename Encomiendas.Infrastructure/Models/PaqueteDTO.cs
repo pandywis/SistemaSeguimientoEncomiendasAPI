@@ -1,5 +1,5 @@
-﻿namespace SistemaSeguimientoEncomiendasAPI.DTOS
-{
+﻿namespace Encomiendas.Infrastructure.Models;
+
     public class PaqueteDTO
     {
         public int Id { get; set; }
@@ -14,4 +14,4 @@
 
         public int ClienteId { get; set; }
     }
-}
+

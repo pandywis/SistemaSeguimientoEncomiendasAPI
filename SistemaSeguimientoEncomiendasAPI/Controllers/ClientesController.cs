@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SistemaSeguimientoEncomiendasAPI.Data;
-using SistemaSeguimientoEncomiendasAPI.DTOs;
-using SistemaSeguimientoEncomiendasAPI.Models;
+using Encomiendas.Infrastructure.Context;
+using Encomiendas.Infrastructure.Models;
+using SistemaSeguimientoEncomiendas.Domain.Entities;
 
 namespace SistemaSeguimientoEncomiendasAPI.Controllers
 {

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SistemaSeguimientoEncomiendasAPI.Data;
+using Encomiendas.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

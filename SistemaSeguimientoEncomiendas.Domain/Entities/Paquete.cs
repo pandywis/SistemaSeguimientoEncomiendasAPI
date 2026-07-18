@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SistemaSeguimientoEncomiendasAPI.Models
-{
+namespace SistemaSeguimientoEncomiendas.Domain.Entities;
+
     public class Paquete
     {
         [Key]
@@ -29,4 +29,4 @@ namespace SistemaSeguimientoEncomiendasAPI.Models
         // Relación
         public Cliente? Cliente { get; set; }
     }
-}
+

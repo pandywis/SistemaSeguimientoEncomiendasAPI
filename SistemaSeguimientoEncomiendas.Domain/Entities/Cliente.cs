@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SistemaSeguimientoEncomiendasAPI.Models
-{
+namespace SistemaSeguimientoEncomiendas.Domain.Entities;
+
     public class Cliente
     {
         [Key]
@@ -22,4 +22,4 @@ namespace SistemaSeguimientoEncomiendasAPI.Models
         // Un cliente puede tener muchos paquetes
         public ICollection<Paquete>? Paquetes { get; set; }
     }
-}
+

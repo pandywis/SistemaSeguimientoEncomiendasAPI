@@ -1,16 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace Encomiendas.Infrastructure.Models;
 
-namespace SistemaSeguimientoEncomiendasAPI.DTOs
-{
-    public class CrearClienteDTO
+    public class ClienteDTO
     {
-        [Required]
+        public int Id { get; set; }
         public string Nombre { get; set; } = string.Empty;
-
-        [Required]
         public string Telefono { get; set; } = string.Empty;
-
-        [Required]
         public string Direccion { get; set; } = string.Empty;
     }
-}

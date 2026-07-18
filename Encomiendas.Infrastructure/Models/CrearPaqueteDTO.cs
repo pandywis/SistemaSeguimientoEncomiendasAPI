@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SistemaSeguimientoEncomiendasAPI.DTOS
-{
+namespace Encomiendas.Infrastructure.Models;
+
     public class CrearPaqueteDTO
     {
         [Required]
@@ -19,4 +19,4 @@ namespace SistemaSeguimientoEncomiendasAPI.DTOS
         [Required]
         public int ClienteId { get; set; }
     }
-}
+
