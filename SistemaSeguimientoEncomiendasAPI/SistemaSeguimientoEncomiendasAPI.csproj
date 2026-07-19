@@ -31,6 +31,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Encomiendas.Infrastructure\Encomiendas.Infrastructure.csproj" />
+		<ProjectReference Include="..\SistemaSeguimientoEncomiendas.Application\SistemaSeguimientoEncomiendas.Application.csproj" />
 		<ProjectReference Include="..\SistemaSeguimientoEncomiendas.Domain\SistemaSeguimientoEncomiendas.Domain.csproj" />
 	</ItemGroup>
 

@@ -1,28 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Encomiendas.Infrastructure.Context;
-using Encomiendas.Infrastructure.Models;
+using SistemaSeguimientoEncomiendas.Application.Contract;
+using SistemaSeguimientoEncomiendas.Application.Dtos;
 using SistemaSeguimientoEncomiendas.Domain.Entities;
 
-namespace SistemaSeguimientoEncomiendasAPI.Controllers
+namespace SistemaSeguimientoEncomiendas.Application.Services
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ClientesController : ControllerBase
+    public class ClienteService : IClienteService
     {
         private readonly AppDbContext _context;
 
-        public ClientesController(AppDbContext context)
+        public ClienteService(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/clientes
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ClienteDTO>>> GetClientes()
+        public async Task<List<ClienteDto>> ObtenerTodos()
         {
-            var clientes = await _context.Clientes
-                .Select(c => new ClienteDTO
+            return await _context.Clientes
+                .Select(c => new ClienteDto
                 {
                     Id = c.Id,
                     Nombre = c.Nombre,
@@ -30,20 +26,16 @@ namespace SistemaSeguimientoEncomiendasAPI.Controllers
                     Direccion = c.Direccion
                 })
                 .ToListAsync();
-
-            return Ok(clientes);
         }
 
-        // GET: api/clientes/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ClienteDTO>> GetCliente(int id)
+        public async Task<ClienteDto?> ObtenerPorId(int id)
         {
             var cliente = await _context.Clientes.FindAsync(id);
 
             if (cliente == null)
-                return NotFound();
+                return null;
 
-            return new ClienteDTO
+            return new ClienteDto
             {
                 Id = cliente.Id,
                 Nombre = cliente.Nombre,
@@ -52,9 +44,7 @@ namespace SistemaSeguimientoEncomiendasAPI.Controllers
             };
         }
 
-        // POST: api/clientes
-        [HttpPost]
-        public async Task<ActionResult> CrearCliente(CrearClienteDTO dto)
+        public async Task Crear(CrearClienteDto dto)
         {
             var cliente = new Cliente
             {
@@ -65,41 +55,31 @@ namespace SistemaSeguimientoEncomiendasAPI.Controllers
 
             _context.Clientes.Add(cliente);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetCliente), new { id = cliente.Id }, cliente);
         }
 
-        // PUT: api/clientes/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult> ActualizarCliente(int id, CrearClienteDTO dto)
+        public async Task Actualizar(int id, CrearClienteDto dto)
         {
             var cliente = await _context.Clientes.FindAsync(id);
 
             if (cliente == null)
-                return NotFound();
+                throw new Exception("Cliente no encontrado.");
 
             cliente.Nombre = dto.Nombre;
             cliente.Telefono = dto.Telefono;
             cliente.Direccion = dto.Direccion;
 
             await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
-        // DELETE: api/clientes/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> EliminarCliente(int id)
+        public async Task Eliminar(int id)
         {
             var cliente = await _context.Clientes.FindAsync(id);
 
             if (cliente == null)
-                return NotFound();
+                throw new Exception("Cliente no encontrado.");
 
             _context.Clientes.Remove(cliente);
             await _context.SaveChangesAsync();
-
-            return NoContent();
         }
     }
 }
