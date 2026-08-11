@@ -1,0 +1,28 @@
+@page
+@model Encomiendas.Web.Pages.Reportes.IndexModel
+@{
+    ViewData["Title"] = "Reportes";
+}
+
+<h2>Reportes</h2>
+
+<a class="btn btn-primary mb-3" asp-page="./Create">Nuevo reporte</a>
+
+@if (Model.Reportes == null || !Model.Reportes.Any())
+{
+    <div class="alert alert-info">No hay reportes.</div>
+}
+else
+{
+    <ul class="list-group">
+    @foreach (var r in Model.Reportes)
+    {
+        <li class="list-group-item">
+            <h5>@r.Titulo <small class="text-muted">@r.FechaCreacion.ToString("g")</small></h5>
+            <p>@r.Contenido</p>
+        </li>
+    }
+    </ul>
+}
+
+<a class="btn btn-secondary mt-3" asp-page="/Index">Volver al inicio</a>

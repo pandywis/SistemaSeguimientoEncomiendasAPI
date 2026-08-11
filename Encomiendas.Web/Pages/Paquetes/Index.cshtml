@@ -1,0 +1,43 @@
+@page
+@model Encomiendas.Web.Pages.Paquetes.IndexModel
+@{
+    ViewData["Title"] = "Paquetes";
+}
+
+<h2>Paquetes</h2>
+<p>
+    <a asp-page="./Create" class="btn btn-secondary">Registrar paquete</a>
+</p>
+
+@if (Model.Paquetes == null || !Model.Paquetes.Any())
+{
+    <div class="alert alert-info">No hay paquetes registrados.</div>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Fecha envío</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var p in Model.Paquetes)
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.Codigo</td>
+                <td>@p.Descripcion</td>
+                <td>@p.Estado</td>
+                <td>@p.FechaEnvio.ToString("g")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<a class="btn btn-secondary" asp-page="/Index">Volver al inicio</a>

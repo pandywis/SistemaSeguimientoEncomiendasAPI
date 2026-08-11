@@ -1,0 +1,53 @@
+@page
+@model Encomiendas.Web.Pages.Paquetes.CreateModel
+@{
+    ViewData["Title"] = "Registrar paquete";
+}
+
+<h2>Registrar paquete</h2>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Codigo" class="form-label"></label>
+        <input asp-for="Input.Codigo" class="form-control" />
+        <span asp-validation-for="Input.Codigo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Descripcion" class="form-label"></label>
+        <input asp-for="Input.Descripcion" class="form-control" />
+        <span asp-validation-for="Input.Descripcion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Estado" class="form-label"></label>
+        <input asp-for="Input.Estado" class="form-control" />
+        <span asp-validation-for="Input.Estado" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.FechaEnvio" class="form-label"></label>
+        <input asp-for="Input.FechaEnvio" class="form-control" type="datetime-local" />
+        <span asp-validation-for="Input.FechaEnvio" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.ClienteId" class="form-label"></label>
+        <div class="d-flex gap-2">
+            <select asp-for="Input.ClienteId" class="form-select" asp-items="Model.ClientesSelect">
+                <option value="">Seleccione un cliente</option>
+            </select>
+            <a asp-page="/Clientes/Create" asp-route-returnUrl="/Paquetes/Create" class="btn btn-outline-primary">Crear cliente</a>
+        </div>
+        <span asp-validation-for="Input.ClienteId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Registrar</button>
+    <a asp-page="/Paquetes/Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

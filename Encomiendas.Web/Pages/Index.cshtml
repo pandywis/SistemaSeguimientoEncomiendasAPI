@@ -1,0 +1,225 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="dashboard">
+
+    <!-- Barra lateral -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <span class="brand-icon">📦</span>
+            <span>EncomiendaFlow</span>
+        </div>
+
+        <nav class="menu">
+
+            <a href="/" class="menu-item active">
+                <span>🏠</span>
+                <span>Inicio</span>
+            </a>
+
+            <a href="/Clientes" class="menu-item">
+                <span>👥</span>
+                <span>Clientes</span>
+            </a>
+
+            <a href="/Paquetes" class="menu-item">
+                <span>📦</span>
+                <span>Paquetes</span>
+            </a>
+
+            <a href="/Reportes" class="menu-item">
+                <span>📊</span>
+                <span>Reportes</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="#" class="menu-item">
+                <span>⚙️</span>
+                <span>Configuración</span>
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+
+        <!-- Encabezado -->
+        <header class="topbar">
+
+            <div>
+                <h1>Dashboard</h1>
+                <p>Bienvenido al sistema de seguimiento de encomiendas.</p>
+            </div>
+
+            <div class="user">
+                <div class="user-icon">
+                    👤
+                </div>
+
+                <div>
+                    <strong>Administrador</strong>
+                    <small>Sistema</small>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- Tarjetas -->
+        <section class="stats">
+
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+
+                <div>
+                    <span>Clientes</span>
+                    <strong>0</strong>
+                    <small>Registrados</small>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+
+                <div>
+                    <span>Paquetes</span>
+                    <strong>0</strong>
+                    <small>Registrados</small>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon">🚚</div>
+
+                <div>
+                    <span>En tránsito</span>
+                    <strong>0</strong>
+                    <small>Paquetes activos</small>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+
+                <div>
+                    <span>Entregados</span>
+                    <strong>0</strong>
+                    <small>Completados</small>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Contenido inferior -->
+        <section class="dashboard-grid">
+
+            <!-- Bienvenida -->
+            <div class="welcome-card">
+
+                <div>
+                    <span class="welcome-label">SISTEMA DE ENCOMIENDAS</span>
+
+                    <h2>
+                        Gestiona tus envíos
+                        de forma sencilla.
+                    </h2>
+
+                    <p>
+                        Administra clientes, paquetes y el estado
+                        de tus encomiendas desde un solo lugar.
+                    </p>
+
+                    <a href="/Paquetes" class="primary-button">
+                        Ver paquetes →
+                    </a>
+                </div>
+
+                <div class="welcome-icon">
+                    📦
+                </div>
+
+            </div>
+
+
+            <!-- Acciones rápidas -->
+            <div class="quick-card">
+
+                <h3>Acciones rápidas</h3>
+
+                <a href="/Clientes" class="quick-action">
+                    <span>👤</span>
+
+                    <div>
+                        <strong>Gestionar clientes</strong>
+                        <small>Registrar y consultar clientes</small>
+                    </div>
+
+                    <span>›</span>
+                </a>
+
+
+                <a href="/Paquetes" class="quick-action">
+                    <span>📦</span>
+
+                    <div>
+                        <strong>Gestionar paquetes</strong>
+                        <small>Administrar tus encomiendas</small>
+                    </div>
+
+                    <span>›</span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- Paquetes recientes -->
+        <section class="recent-card">
+
+            <div class="section-header">
+                <div>
+                    <h2>Paquetes recientes</h2>
+                    <p>Últimos paquetes registrados en el sistema.</p>
+                </div>
+
+                <a href="/Paquetes">Ver todos →</a>
+            </div>
+
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+                <h3>No hay paquetes registrados</h3>
+
+                <p>
+                    Cuando registres paquetes aparecerán
+                    aquí.
+                </p>
+
+                <a href="/Paquetes" class="secondary-button">
+                    Registrar paquete
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>

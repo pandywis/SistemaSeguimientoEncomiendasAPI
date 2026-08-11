@@ -1,6 +1,11 @@
 @SistemaSeguimientoEncomiendasAPI_HostAddress = http://localhost:5298
 
-GET {{SistemaSeguimientoEncomiendasAPI_HostAddress}}/weatherforecast/
+### Obtener todos los clientes
+GET {{SistemaSeguimientoEncomiendasAPI_HostAddress}}/api/Clientes
 Accept: application/json
 
 ###
+
+### Obtener todos los paquetes
+GET {{SistemaSeguimientoEncomiendasAPI_HostAddress}}/api/Paquetes
+Accept: application/json

@@ -1,0 +1,39 @@
+@page
+@model Encomiendas.Web.Pages.Clientes.IndexModel
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<h2>Clientes</h2>
+<a class="btn btn-primary mb-3" asp-page="./Create">Nuevo cliente</a>
+
+@if (Model.Clientes == null || !Model.Clientes.Any())
+{
+    <div class="alert alert-info">No hay clientes registrados.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var c in Model.Clientes)
+        {
+            <tr>
+                <td>@c.Id</td>
+                <td>@c.Nombre</td>
+                <td>@c.Telefono</td>
+                <td>@c.Direccion</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<a class="btn btn-secondary" asp-page="/Index">Volver al inicio</a>

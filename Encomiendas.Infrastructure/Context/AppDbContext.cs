@@ -15,5 +15,7 @@ namespace Encomiendas.Infrastructure.Context;
 
         public DbSet<Paquete> Paquetes { get; set; }
 
+        public DbSet<SistemaSeguimientoEncomiendas.Domain.Entities.Reporte> Reportes { get; set; }
+
 
     }

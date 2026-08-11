@@ -1,85 +1,86 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Encomiendas.Infrastructure.Context;
+﻿using Microsoft.AspNetCore.Mvc;
 using SistemaSeguimientoEncomiendas.Application.Contract;
 using SistemaSeguimientoEncomiendas.Application.Dtos;
-using SistemaSeguimientoEncomiendas.Domain.Entities;
 
-namespace SistemaSeguimientoEncomiendas.Application.Services
+namespace SistemaSeguimientoEncomiendasAPI.Controllers
 {
-    public class ClienteService : IClienteService
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ClientesController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IClienteService _clienteService;
 
-        public ClienteService(AppDbContext context)
+        public ClientesController(IClienteService clienteService)
         {
-            _context = context;
+            _clienteService = clienteService;
         }
 
-        public async Task<List<ClienteDto>> ObtenerTodos()
+        // GET: api/clientes
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ClienteDto>>> GetClientes()
         {
-            return await _context.Clientes
-                .Select(c => new ClienteDto
-                {
-                    Id = c.Id,
-                    Nombre = c.Nombre,
-                    Telefono = c.Telefono,
-                    Direccion = c.Direccion
-                })
-                .ToListAsync();
+            var clientes = await _clienteService.ObtenerTodos();
+            return Ok(clientes);
         }
 
-        public async Task<ClienteDto?> ObtenerPorId(int id)
+        // GET: api/clientes/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ClienteDto>> GetCliente(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = await _clienteService.ObtenerPorId(id);
 
             if (cliente == null)
-                return null;
+                return NotFound();
 
-            return new ClienteDto
+            return Ok(cliente);
+        }
+
+        // POST: api/clientes
+        [HttpPost]
+        public async Task<ActionResult> CrearCliente(CrearClienteDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            await _clienteService.Crear(dto);
+
+            return Ok(new
             {
-                Id = cliente.Id,
-                Nombre = cliente.Nombre,
-                Telefono = cliente.Telefono,
-                Direccion = cliente.Direccion
-            };
+                mensaje = "Cliente creado correctamente."
+            });
         }
 
-        public async Task Crear(CrearClienteDto dto)
+        // PUT: api/clientes/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult> ActualizarCliente(int id, CrearClienteDto dto)
         {
-            var cliente = new Cliente
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
             {
-                Nombre = dto.Nombre,
-                Telefono = dto.Telefono,
-                Direccion = dto.Direccion
-            };
-
-            _context.Clientes.Add(cliente);
-            await _context.SaveChangesAsync();
+                await _clienteService.Actualizar(id, dto);
+                return NoContent();
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
-        public async Task Actualizar(int id, CrearClienteDto dto)
+        // DELETE: api/clientes/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> EliminarCliente(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
-
-            if (cliente == null)
-                throw new Exception("Cliente no encontrado.");
-
-            cliente.Nombre = dto.Nombre;
-            cliente.Telefono = dto.Telefono;
-            cliente.Direccion = dto.Direccion;
-
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task Eliminar(int id)
-        {
-            var cliente = await _context.Clientes.FindAsync(id);
-
-            if (cliente == null)
-                throw new Exception("Cliente no encontrado.");
-
-            _context.Clientes.Remove(cliente);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _clienteService.Eliminar(id);
+                return NoContent();
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
     }
 }

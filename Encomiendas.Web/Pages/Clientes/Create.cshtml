@@ -1,0 +1,37 @@
+@page
+@model Encomiendas.Web.Pages.Clientes.CreateModel
+@{
+    ViewData["Title"] = "Nuevo cliente";
+}
+
+<h2>Nuevo cliente</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="ReturnUrl" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Nombre" class="form-label"></label>
+        <input asp-for="Input.Nombre" class="form-control" />
+        <span asp-validation-for="Input.Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Telefono" class="form-label"></label>
+        <input asp-for="Input.Telefono" class="form-control" />
+        <span asp-validation-for="Input.Telefono" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.Direccion" class="form-label"></label>
+        <input asp-for="Input.Direccion" class="form-control" />
+        <span asp-validation-for="Input.Direccion" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crear</button>
+    <a asp-page="/Clientes/Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

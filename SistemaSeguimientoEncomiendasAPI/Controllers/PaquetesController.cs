@@ -1,39 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Encomiendas.Infrastructure.Context;
-using Encomiendas.Infrastructure.Models;
-using SistemaSeguimientoEncomiendas.Domain.Entities;
-using SistemaSeguimientoEncomiendas.Domain.Entities;
+using SistemaSeguimientoEncomiendas.Application.Contract;
+using Encomiendas.Infrastructure.Models; // Mantiene tus DTOs si están aquí
+
 namespace SistemaSeguimientoEncomiendasAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PaquetesController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IPaqueteService _paqueteService;
 
-        public PaquetesController(AppDbContext context)
+        // Inyectamos la interfaz del servicio en lugar del AppDbContext
+        public PaquetesController(IPaqueteService paqueteService)
         {
-            _context = context;
+            _paqueteService = paqueteService;
         }
 
         // GET: api/paquetes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> GetPaquetes()
         {
-            var paquetes = await _context.Paquetes
-                .Include(p => p.Cliente)
-                .Select(p => new
-                {
-                    p.Id,
-                    p.Codigo,
-                    p.Descripcion,
-                    p.Estado,
-                    p.FechaEnvio,
-                    Cliente = p.Cliente!.Nombre
-                })
-                .ToListAsync();
-
+            var paquetes = await _paqueteService.ObtenerTodosAsync();
             return Ok(paquetes);
         }
 
@@ -41,20 +28,7 @@ namespace SistemaSeguimientoEncomiendasAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<object>> GetPaquete(int id)
         {
-            var paquete = await _context.Paquetes
-                .Include(p => p.Cliente)
-                .Where(p => p.Id == id)
-                .Select(p => new
-                {
-                    p.Id,
-                    p.Codigo,
-                    p.Descripcion,
-                    p.Estado,
-                    p.FechaEnvio,
-                    Cliente = p.Cliente!.Nombre
-                })
-                .FirstOrDefaultAsync();
-
+            var paquete = await _paqueteService.ObtenerPorIdAsync(id);
             if (paquete == null)
                 return NotFound("Paquete no encontrado.");
 
@@ -65,42 +39,20 @@ namespace SistemaSeguimientoEncomiendasAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> CrearPaquete(CrearPaqueteDTO dto)
         {
-            var cliente = await _context.Clientes.FindAsync(dto.ClienteId);
+            var exito = await _paqueteService.CrearAsync(dto);
+            if (!exito)
+                return BadRequest("El cliente especificado no existe o no se pudo crear el paquete.");
 
-            if (cliente == null)
-                return BadRequest("El cliente especificado no existe.");
-
-            var paquete = new Paquete
-            {
-                Codigo = dto.Codigo,
-                Descripcion = dto.Descripcion,
-                Estado = dto.Estado,
-                FechaEnvio = dto.FechaEnvio,
-                ClienteId = dto.ClienteId
-            };
-
-            _context.Paquetes.Add(paquete);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetPaquete), new { id = paquete.Id }, paquete);
+            return Ok("Paquete creado con éxito.");
         }
 
         // PUT: api/paquetes/5
         [HttpPut("{id}")]
         public async Task<ActionResult> ActualizarPaquete(int id, CrearPaqueteDTO dto)
         {
-            var paquete = await _context.Paquetes.FindAsync(id);
-
-            if (paquete == null)
-                return NotFound("Paquete no encontrado.");
-
-            paquete.Codigo = dto.Codigo;
-            paquete.Descripcion = dto.Descripcion;
-            paquete.Estado = dto.Estado;
-            paquete.FechaEnvio = dto.FechaEnvio;
-            paquete.ClienteId = dto.ClienteId;
-
-            await _context.SaveChangesAsync();
+            var exito = await _paqueteService.ActualizarAsync(id, dto);
+            if (!exito)
+                return NotFound("Paquete o Cliente no encontrado.");
 
             return NoContent();
         }
@@ -109,13 +61,9 @@ namespace SistemaSeguimientoEncomiendasAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> EliminarPaquete(int id)
         {
-            var paquete = await _context.Paquetes.FindAsync(id);
-
-            if (paquete == null)
+            var exito = await _paqueteService.EliminarAsync(id);
+            if (!exito)
                 return NotFound("Paquete no encontrado.");
-
-            _context.Paquetes.Remove(paquete);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
